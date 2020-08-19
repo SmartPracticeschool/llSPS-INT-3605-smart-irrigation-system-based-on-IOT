@@ -1,0 +1,450 @@
+[
+    {
+        "id": "8325f296.64af3",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "1451b961.3da9b7",
+        "type": "debug",
+        "z": "8325f296.64af3",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 590,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "8af89574.60ab38",
+        "type": "ibmiot in",
+        "z": "8325f296.64af3",
+        "authentication": "apiKey",
+        "apiKey": "ff2d5606.e1daa8",
+        "inputType": "evt",
+        "logicalInterface": "",
+        "ruleId": "",
+        "deviceId": "123456",
+        "applicationId": "",
+        "deviceType": "raspberry_pi",
+        "eventType": "+",
+        "commandType": "",
+        "format": "json",
+        "name": "IBM IoT",
+        "service": "registered",
+        "allDevices": "",
+        "allApplications": "",
+        "allDeviceTypes": false,
+        "allLogicalInterfaces": "",
+        "allEvents": true,
+        "allCommands": "",
+        "allFormats": "",
+        "qos": 0,
+        "x": 150,
+        "y": 200,
+        "wires": [
+            [
+                "572e1936.062d98",
+                "1451b961.3da9b7",
+                "433585ff.eb488c"
+            ]
+        ]
+    },
+    {
+        "id": "572e1936.062d98",
+        "type": "function",
+        "z": "8325f296.64af3",
+        "name": "Temperature",
+        "func": "global.set('temperature',msg.payload.Temperature)\nmsg.payload=msg.payload.Temperature\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 350,
+        "y": 280,
+        "wires": [
+            [
+                "1451b961.3da9b7",
+                "fa7175a3.6851f8"
+            ]
+        ]
+    },
+    {
+        "id": "46db2605.aad828",
+        "type": "http in",
+        "z": "8325f296.64af3",
+        "name": "",
+        "url": "/data",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 240,
+        "y": 340,
+        "wires": [
+            [
+                "ec22e390.97ea3"
+            ]
+        ]
+    },
+    {
+        "id": "62bbd136.018ad",
+        "type": "http response",
+        "z": "8325f296.64af3",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 750,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "ec22e390.97ea3",
+        "type": "function",
+        "z": "8325f296.64af3",
+        "name": "data",
+        "func": "msg.payload={'temperature':global.get(\"temperature\"),'moisture':global.get(\"moisture\")}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 490,
+        "y": 340,
+        "wires": [
+            [
+                "62bbd136.018ad"
+            ]
+        ]
+    },
+    {
+        "id": "fa3d38e9.4e5d38",
+        "type": "http in",
+        "z": "8325f296.64af3",
+        "name": "",
+        "url": "/command",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 240,
+        "y": 400,
+        "wires": [
+            [
+                "7f91a5eb.4d5bac"
+            ]
+        ]
+    },
+    {
+        "id": "70caaece.3a325",
+        "type": "http response",
+        "z": "8325f296.64af3",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 750,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "7f91a5eb.4d5bac",
+        "type": "function",
+        "z": "8325f296.64af3",
+        "name": "",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 460,
+        "y": 400,
+        "wires": [
+            [
+                "70caaece.3a325",
+                "ac74aa8a.9ed038",
+                "ad89d545.f829c8"
+            ]
+        ]
+    },
+    {
+        "id": "ad89d545.f829c8",
+        "type": "ibmiot out",
+        "z": "8325f296.64af3",
+        "authentication": "apiKey",
+        "apiKey": "275ce47e.141cac",
+        "outputType": "cmd",
+        "deviceId": "123456",
+        "deviceType": "raspberrypi",
+        "eventCommandType": "home",
+        "format": "json",
+        "data": "data",
+        "qos": 0,
+        "name": "IBM IoT",
+        "service": "registered",
+        "x": 540,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "975eb62e.f745b8",
+        "type": "debug",
+        "z": "8325f296.64af3",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 730,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "ac74aa8a.9ed038",
+        "type": "debug",
+        "z": "8325f296.64af3",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 750,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "433585ff.eb488c",
+        "type": "function",
+        "z": "8325f296.64af3",
+        "name": "Moisture",
+        "func": "global.set('moisture',msg.payload.Moisture)\nmsg.payload=msg.payload.Moisture\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 380,
+        "y": 120,
+        "wires": [
+            [
+                "1451b961.3da9b7",
+                "423f3fd4.7d3ed",
+                "f7a3c87c.ee8978"
+            ]
+        ]
+    },
+    {
+        "id": "e8d550e9.3ce4b",
+        "type": "http request",
+        "z": "8325f296.64af3",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://www.fast2sms.com/dev/bulk?authorization=4xWpD1oXvBMOqhkHrFgaPid0lTb6YumytNIJ3LsGzVjc5Z7S9wGX6JnsBNe0gVycuPMOYKQxhEt78iL3&sender_id=FSTSMS&message=Low Moisture&language=english&route=p&numbers=9247450567",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 890,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "423f3fd4.7d3ed",
+        "type": "switch",
+        "z": "8325f296.64af3",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "lt",
+                "v": "80",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 690,
+        "y": 120,
+        "wires": [
+            [
+                "e8d550e9.3ce4b"
+            ]
+        ]
+    },
+    {
+        "id": "fe166e58.1ed93",
+        "type": "ui_button",
+        "z": "8325f296.64af3",
+        "name": "",
+        "group": "cd567f04.f0ff4",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Motor ON",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "{\"command\":\"motoron\"}",
+        "payloadType": "json",
+        "topic": "",
+        "x": 240,
+        "y": 460,
+        "wires": [
+            [
+                "ad89d545.f829c8",
+                "975eb62e.f745b8"
+            ]
+        ]
+    },
+    {
+        "id": "7e0fca5b.a2a194",
+        "type": "ui_button",
+        "z": "8325f296.64af3",
+        "name": "",
+        "group": "cd567f04.f0ff4",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Motor OFF",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "{\"command\":\"motoroff\"}",
+        "payloadType": "json",
+        "topic": "",
+        "x": 250,
+        "y": 540,
+        "wires": [
+            [
+                "ad89d545.f829c8",
+                "975eb62e.f745b8"
+            ]
+        ]
+    },
+    {
+        "id": "fa7175a3.6851f8",
+        "type": "ui_gauge",
+        "z": "8325f296.64af3",
+        "name": "",
+        "group": "c74cc7d2.b7c058",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Temperature",
+        "label": "units",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 590,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "f7a3c87c.ee8978",
+        "type": "ui_gauge",
+        "z": "8325f296.64af3",
+        "name": "",
+        "group": "c74cc7d2.b7c058",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Moisture",
+        "label": "units",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 600,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "ff2d5606.e1daa8",
+        "type": "ibmiot",
+        "z": "",
+        "name": "",
+        "keepalive": "60",
+        "serverName": "",
+        "cleansession": true,
+        "appId": "",
+        "shared": false
+    },
+    {
+        "id": "275ce47e.141cac",
+        "type": "ibmiot",
+        "z": "",
+        "name": "",
+        "keepalive": "60",
+        "serverName": "",
+        "cleansession": true,
+        "appId": "",
+        "shared": false
+    },
+    {
+        "id": "cd567f04.f0ff4",
+        "type": "ui_group",
+        "z": "8325f296.64af3",
+        "name": "MOTOR CONTROLS",
+        "tab": "98ad74f8.430ea8",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "c74cc7d2.b7c058",
+        "type": "ui_group",
+        "z": "8325f296.64af3",
+        "name": "SENSOR VALUES",
+        "tab": "98ad74f8.430ea8",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "98ad74f8.430ea8",
+        "type": "ui_tab",
+        "z": "8325f296.64af3",
+        "name": "Smart Irrigation",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]
